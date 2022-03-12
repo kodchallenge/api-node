@@ -1,5 +1,5 @@
 import express from "express";
-import { addTrack, getAllTrackList } from "../controllers/track.controller.js";
+import { addTrack, getAllTrackList } from "../../controllers/track.controller.js";
 
 const trackRouter = express.Router()
 
