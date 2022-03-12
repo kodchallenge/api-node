@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
 dotenv.config()
+import trackRouter from './routes/track.route.js'
 import './db.js'
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -19,6 +20,7 @@ app.get("/", (req, res, next) => {
     })
 })
 
+app.use("/tracks", trackRouter)
 
 
 //Error handling
@@ -27,7 +29,7 @@ app.use((err, req, res, next) => {
         status: false,
         error: err
     })
-  });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running in port ${PORT}`)
