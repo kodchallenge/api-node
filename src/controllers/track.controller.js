@@ -1,19 +1,15 @@
 import TrackModel from "../models/track.model.js"
+import Result from "../utils/Result.js"
 
 const getAllTrackList = async (req, res, next) => {
     const tracks = await TrackModel.find()
-    res.status(200).json({
-        data: tracks,
-        message: "Kategoriler listelendi"
-    })
+    Result.success(res, "Kategori listelendi", tracks)
 }
 
 const addTrack = async (req, res, next) => {
     const track = req.body
     await new TrackModel(track).save()
-    res.status(200).json({
-        message: "Kategori eklendi"
-    })
+    Result.success(res, "Kategori eklendi")
 }
 
 export {
