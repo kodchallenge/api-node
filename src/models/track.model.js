@@ -1,18 +1,12 @@
 import mongoose from "mongoose";
+import baseModel from "./base.model.js";
 
 const trackSchema = mongoose.Schema({
     name: String,
     slug: String,
     description: String,
     icon: String,
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
-    status: {
-        type: Boolean,
-        default: true
-    },
+    ...baseModel
 })
 
 const TrackModel = mongoose.model("tracks", trackSchema)
