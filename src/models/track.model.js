@@ -6,6 +6,10 @@ const trackSchema = mongoose.Schema({
     slug: String,
     description: String,
     icon: String,
+    problems: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "problems"
+    }],
     ...baseModel
 })
 
