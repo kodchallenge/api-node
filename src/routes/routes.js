@@ -1,6 +1,6 @@
 import express from "express";
 import trackRouter from './api/track.route.js'
-import difficultyRouter from "./static/difficulty.model.js";
+import difficultyRouter from "./static/difficulty.route.js";
 const router = express.Router()
 
 router.get("/", (req, res, next) => {
