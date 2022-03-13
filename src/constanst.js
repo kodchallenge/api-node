@@ -4,6 +4,12 @@ const DIFFICULTY = {
     HARD: "Zor",
 }
 
+const CONFIG = {
+    API_ROOT: "api",
+    VERSIYON: "v1",
+}
+
 export {
-    DIFFICULTY
+    DIFFICULTY,
+    CONFIG
 }
