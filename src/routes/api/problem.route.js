@@ -1,12 +1,14 @@
 import express from "express";
-import { addProblem, getAllByTrack, getAllProblem } from "../../controllers/problem.controller.js";
+import { addProblem, getAllProblemByTrack, getAllProblem, getProblemById } from "../../controllers/problem.controller.js";
 
 const problemRouter = express.Router()
 
 problemRouter.get("/", getAllProblem)
 problemRouter.post("/", addProblem)
 
-problemRouter.get("/getallbytrackid", getAllByTrack)
+problemRouter.get("/getallbytrackid", getAllProblemByTrack)
+
+problemRouter.get("/:id", getProblemById)
 
 
 export default problemRouter

@@ -13,14 +13,24 @@ const addProblem = async (req, res, next) => {
     Result.success(res, "Problem Eklendi")
 }
 
-const getAllByTrack = async (req, res, next) => {
+const getAllProblemByTrack = async (req, res, next) => {
     const trackId = req.query.track
     const problems = await ProblemModel.find({track: trackId}).populate('track')
     Result.success(res, "Kategoriye ait problemler getirildi", problems)
 }
 
+const getProblemById = async (req, res, next) => {
+    const id = req.params.id
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        Result.error(res, "Problem id geçersiz")
+    }
+    const problem = await ProblemModel.findOne({_id: id}).populate("track")
+    Result.success(res, "Problem getirildi", problem)
+}
+
 export {
     getAllProblem,
     addProblem,
-    getAllByTrack
+    getAllProblemByTrack,
+    getProblemById,
 }
