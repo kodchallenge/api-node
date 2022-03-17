@@ -1,5 +1,5 @@
 import ProblemModel from "../models/problem.model.js"
-import Result from "../utils/Result.js"
+import Result from "../utils/result.js"
 
 
 const getAllProblem = async (req, res, next) => {

@@ -1,5 +1,5 @@
 import axios from "axios"
-import Result from "../utils/Result.js"
+import Result from "../utils/result.js"
 const runCode = async (req, res, next) => {
     const code = req.body
 

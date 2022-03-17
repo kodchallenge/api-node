@@ -1,6 +1,6 @@
 import ProblemModel from "../models/problem.model.js"
 import TrackModel from "../models/track.model.js"
-import Result from "../utils/Result.js"
+import Result from "../utils/result.js"
 
 const getAllTrackList = async (req, res, next) => {
     const tracks = await TrackModel.find().populate("problems")

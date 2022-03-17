@@ -1,6 +1,6 @@
 import express from "express";
 import { DIFFICULTY } from "../../constanst.js";
-import Result from "../../utils/Result.js";
+import Result from "../../utils/result.js";
 
 const difficultyRouter = express.Router()
 
