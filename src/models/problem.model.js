@@ -4,6 +4,8 @@ import baseModel from "./base.model.js";
 const problemSchema = mongoose.Schema({
     name: String,
     description: String,
+    functionName: String,
+    baseCode: String,
     difficulty: String,
     score: Number,
     track: {
