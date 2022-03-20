@@ -1,4 +1,5 @@
 import axios from "axios"
+import CodeTestModel from "../models/codeTest.model.js"
 import ProblemModel from "../models/problem.model.js"
 import Result from "../utils/result.js"
 import { isObjectId } from "../utils/Util.js"
@@ -45,6 +46,21 @@ const runTest = async (req, res, next) => {
     
         axios.post(process.env.CODE_COMPILER_URL+"code/runtest", code)
             .then((response) => {
+                const testData = response.data
+                if(!testData) {
+                    throw Error("Test başarısız!")
+                }
+                const codeTest = new CodeTestModel({
+                    problem: code.problem,
+                    user: "6237345d2429d710bdd48587",
+                    code: code.code,
+                    rate: {
+                        correct: testData.filter(x => x.status).length,
+                        wrong: testData.filter(x => !x.status).length
+                    },
+                    test: [...testData],
+                })
+                codeTest.save()
                 Result.success(res, "End code test", response.data)
             })
             .catch((err) => {
