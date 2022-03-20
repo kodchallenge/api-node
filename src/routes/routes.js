@@ -1,4 +1,5 @@
 import express from "express";
+import authRouter from "./api/auth.route.js";
 import codeRouter from "./api/code.route.js";
 import problemRouter from "./api/problem.route.js";
 import trackRouter from './api/track.route.js'
@@ -16,6 +17,7 @@ router.use("/tracks", trackRouter)
 router.use("/difficulties", difficultyRouter)
 router.use("/problems", problemRouter)
 router.use("/compiler", codeRouter)
+router.use("/auth", authRouter)
 
 
 export default router
