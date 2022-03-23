@@ -2,6 +2,7 @@ import express from "express";
 import authRouter from "./api/auth.route.js";
 import codeRouter from "./api/code.route.js";
 import problemRouter from "./api/problem.route.js";
+import problemSolutionRouter from "./api/problemSolution.route.js";
 import trackRouter from './api/track.route.js'
 import difficultyRouter from "./static/difficulty.route.js";
 const router = express.Router()
@@ -18,6 +19,7 @@ router.use("/difficulties", difficultyRouter)
 router.use("/problems", problemRouter)
 router.use("/compiler", codeRouter)
 router.use("/auth", authRouter)
+router.use("/problemsolutions", problemSolutionRouter)
 
 
 export default router

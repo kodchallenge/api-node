@@ -60,8 +60,9 @@ const runTest = async (req, res, next) => {
                     },
                     test: [...testData],
                 })
+                
                 codeTest.save()
-                Result.success(res, "End code test", response.data)
+                Result.success(res, "End code test", {tests: testData, _id: codeTest._id})
             })
             .catch((err) => {
                 console.log(err)
