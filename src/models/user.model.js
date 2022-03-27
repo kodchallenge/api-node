@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
     },
     firstname: String,
     lastname: String,
+    role: {
+        type: String,
+        default: 'user',
+        enum: ['user', 'admin'],
+    },
     ...baseModel
 })
 
@@ -28,7 +33,7 @@ userSchema.statics.login = async function(username, password) {
     
     const auth = await bcrypt.compare(password, user.password)
     if(!auth) throw Error("Şifre Hatalı")
-    
+    user.password = null
     return user
 }
 
