@@ -1,6 +1,7 @@
 import UserModel from "../models/user.model.js"
 import Result from '../utils/result.js'
 import jwt from 'jsonwebtoken'
+import MongoError from "../utils/MongoError.js"
 
 const maxAge = 60*60*24
 const createToken = (id) => {
@@ -14,8 +15,11 @@ const login = async (req, res, next) => {
     try {
         const user = await UserModel.login(authData.username, authData.password)
         const token = createToken(user._id)
-        
-        Result.success(res, "Giriş Başarılı", token)
+        const authResponse = {
+            user: user,
+            token: token
+        }
+        Result.success(res, "Giriş Başarılı", authResponse)
     }catch(err) {
         Result.error(res, err.message)
     }
@@ -34,7 +38,14 @@ const signup = async (req, res, next) => {
         Result.success(res, "Kayıt başarılı")
     })
     .catch(err => {
-        Result.error(res, "Kayıt başarısız: "+err)
+        let msg = "Hata oluştu"
+        if(MongoError.unique(err, "username")) {
+            msg = "Kullanıcı Adı kullanımda"
+        }
+        if(MongoError.unique(err, "email")) {
+            msg = "Eposta kullanımda"
+        }
+        Result.error(res, msg)
     })
 }
 
