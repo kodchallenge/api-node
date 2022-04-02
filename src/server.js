@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
+import {handlingError} from './middlewares/handlingError.js'
 dotenv.config()
 import './db.js'
 import router from './routes/routes.js'
@@ -18,13 +19,7 @@ const baseApiUrl = `/${CONFIG.API_ROOT}/${CONFIG.VERSIYON}/`
 app.use(baseApiUrl, router)
 
 //Error handling
-app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(err.status || 400).json({
-        status: false,
-        error: err
-    })
-});
+app.use(handlingError);
 
 app.listen(PORT, () => {
     console.log(`Server is running in port ${PORT}`)
