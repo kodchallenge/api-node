@@ -40,8 +40,25 @@ const updateTrack = async (req, res, next) => {
     }
 }
 
+
+const changeTrackStatus = async (req, res, next) => {
+    const {_id, status} = req.body
+    try {
+        const currentTrack = await TrackModel.findOne({_id: _id})
+        if(!currentTrack) {
+            Result.error(res, "Track not found")
+        } else {
+            TrackModel.updateOne({_id: _id}, {status}, {upsert: true}, (err) => {})
+            Result.success(res, status ? "Track is opened" : "Track is closed")
+        }
+    }catch(err) {
+        next(err)
+    }
+}
+
 export {
     getAllTrackList,
     addTrack,
-    updateTrack
-}   
+    updateTrack,
+    changeTrackStatus
+}
