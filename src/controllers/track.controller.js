@@ -25,7 +25,23 @@ const addTrack = async (req, res, next) => {
     }
 }
 
+const updateTrack = async (req, res, next) => {
+    const {name, slug, description, icon, _id} = req.body
+    try {
+        const currentTrack = await TrackModel.findOne({_id: _id})
+        if(!currentTrack) {
+            Result.error(res, "Track not found")
+        } else {
+            TrackModel.updateOne({_id: _id}, {name, slug, description, icon}, {upsert: true}, (err) => {console.log(err)})
+            Result.success(res, "Updated track")
+        }
+    } catch(err) {
+        Result.error(res, "Interval Server Error")
+    }
+}
+
 export {
     getAllTrackList,
-    addTrack
+    addTrack,
+    updateTrack
 }   

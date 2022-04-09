@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema({
         default: 'user',
         enum: ['user', 'admin'],
     },
+    score: [
+        {
+            track: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "tracks"
+            },
+            score: {
+                type: Number,
+                default: 0,
+            }
+        }
+    ],
     ...baseModel
 })
 

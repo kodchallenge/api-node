@@ -3,7 +3,9 @@ import authRouter from "./api/auth.route.js";
 import codeRouter from "./api/code.route.js";
 import problemRouter from "./api/problem.route.js";
 import problemSolutionRouter from "./api/problemSolution.route.js";
+import scoreRouter from "./api/score.route.js";
 import trackRouter from './api/track.route.js'
+import userRouter from "./api/user.route.js";
 import difficultyRouter from "./static/difficulty.route.js";
 const router = express.Router()
 
@@ -20,6 +22,7 @@ router.use("/problems", problemRouter)
 router.use("/compiler", codeRouter)
 router.use("/auth", authRouter)
 router.use("/problemsolutions", problemSolutionRouter)
-
+router.use("/users", userRouter)
+router.use("/score", scoreRouter)
 
 export default router
