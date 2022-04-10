@@ -5,8 +5,14 @@ const problemSchema = mongoose.Schema({
     name: String,
     description: String,
     functionName: String,
-    baseCode: String,
-    difficulty: String,
+    baseCode: {
+        type: Object,
+    },
+    difficulty: {
+        type: String,
+        default: "kolay",
+        enum: ["kolay", "orta", "zor"]
+    },
     score: Number,
     track: {
         type: mongoose.Schema.Types.ObjectId,

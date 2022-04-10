@@ -1,4 +1,5 @@
 import ProblemModel from "../models/problem.model.js"
+import TrackModel from "../models/track.model.js"
 import Result from "../utils/result.js"
 import { isObjectId } from "../utils/Util.js"
 
@@ -10,7 +11,8 @@ const getAllProblem = async (req, res, next) => {
 
 const addProblem = async (req, res, next) => {
     const problem = req.body
-    await new ProblemModel(problem).save()
+    const newProblem = await new ProblemModel(problem).save()
+    await TrackModel.updateOne({_id: problem.track}, {$push: { problems: newProblem._id }}, {})
     Result.success(res, "Problem Eklendi")
 }
 
@@ -29,9 +31,15 @@ const getProblemById = async (req, res, next) => {
     Result.success(res, "Problem getirildi", problem)
 }
 
+const getProblemDifficulty = (req, res, next) => {
+    const difficulties = ProblemModel.schema.path("difficulty").enumValues
+    Result.success(res, "", difficulties)
+}
+
 export {
     getAllProblem,
     addProblem,
     getAllProblemByTrack,
     getProblemById,
+    getProblemDifficulty,
 }
