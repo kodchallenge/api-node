@@ -14,11 +14,11 @@ const addSolution = async (req, res, next) => {
         if(!codeTest) {
             throw Error("Kod test bulunamadı")
         }
-        const hasSolution = problemSolutionModel.findOne({user: codeTest.user, problem: codeTest.problem})
+        const hasSolution = await problemSolutionModel.exists({user: codeTest.user, problem: codeTest.problem._id})
         if(hasSolution) {
             throw Error("Çözüm daha önce gönderilmiştir.")
         }
-        const userScore = (codeTest.problem.score / codeTest.problem.io.length) * codeTest.rate.correct
+        const userScore = Math.ceil((codeTest.problem.score / codeTest.problem.io.length) * codeTest.rate.correct)
         const solutionData = {
             score: userScore,
             user: codeTest.user,
@@ -33,6 +33,37 @@ const addSolution = async (req, res, next) => {
     }
 }
 
+const getUserSolutionByProblemId = async (req, res, next) => {
+    try {
+        const {userId,problemId} = req.query
+    
+        const solution = await problemSolutionModel.findOne({user: userId, problem: problemId}).populate("codeTest")
+        console.log(solution)
+        if(!solution) {
+            throw Error("Çözümünüz bulunmamaktadır")
+        }
+        Result.success(res, "Çözüm getirildi", solution)
+    } catch(err) {
+        next(err)
+    }
+}
+
+const getProblemSolutions = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        
+        const solutions = await problemSolutionModel.find({problem: id}).sort({score: -1}).limit(10).populate("codeTest user")
+        if(!solutions) {
+            throw Error("Çözüm bulunmamaktadır.")
+        }
+        Result.success(res, "", solutions)
+    }catch(err) {
+        next(err)
+    }
+}
+
 export {
-    addSolution
+    addSolution,
+    getUserSolutionByProblemId,
+    getProblemSolutions
 }
