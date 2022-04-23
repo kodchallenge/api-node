@@ -2,6 +2,7 @@ import UserModel from "../models/user.model.js"
 import Result from '../utils/result.js'
 import jwt from 'jsonwebtoken'
 import MongoError from "../utils/MongoError.js"
+import bcrypt from 'bcrypt'
 
 const maxAge = 60*60*24
 const createToken = (id) => {
@@ -49,9 +50,39 @@ const signup = async (req, res, next) => {
     })
 }
 
+const changePassword = async (req, res, next) => {
+    try {
+        const data = req.body
+        const user = await UserModel.findOne({_id: data._id})
+        if(!user) {
+            Result.error(res, "Kullanıcı bulunamadı", 404)
+            return;
+        }
+        const oldPwdCompare = await bcrypt.compare(data.oldPassword, user.password)
+        if(!oldPwdCompare) {
+            Result.error(res, "Eski şifreni hatalı girdin!")
+            return
+        }
+    
+        if(data.newPassword !== data.newPasswordRepeat) {
+            Result.error(res, "Yeni şifreler uyuşmamaktadır")
+            return
+        }
+    
+        user.password = data.newPassword
+        await user.save()
+    
+        Result.success(res, "Şifre değiştirildi")
+    }
+    catch(err) {
+        console.log(err)
+        next(err)
+    }
+}
 
 export {
     login,
     logout,
-    signup
+    signup,
+    changePassword
 }
