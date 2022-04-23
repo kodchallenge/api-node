@@ -34,6 +34,20 @@ const addSolution = async (req, res, next) => {
     }
 }
 
+const getUserSolutions = async (req, res, next) => {
+    try {
+        const {user} = req.query
+    
+        const solution = await problemSolutionModel.find({user: user}).populate("track")
+        if(!solution) {
+            throw Error("Herhangi bir çözümünüz bulunmamaktadır")
+        }
+        Result.success(res, "Çözümler getirildi", solution)
+    } catch(err) {
+        next(err)
+    }
+}
+
 const getUserSolutionByProblemId = async (req, res, next) => {
     try {
         const {userId,problemId} = req.query
@@ -65,5 +79,6 @@ const getProblemSolutions = async (req, res, next) => {
 export {
     addSolution,
     getUserSolutionByProblemId,
-    getProblemSolutions
+    getProblemSolutions,
+    getUserSolutions
 }
