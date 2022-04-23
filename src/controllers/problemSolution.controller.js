@@ -1,5 +1,6 @@
 import CodeTestModel from "../models/codeTest.model.js"
 import problemSolutionModel from "../models/problemSolution.model.js"
+import UserModel from "../models/user.model.js"
 import Result from "../utils/result.js"
 import { isObjectId } from "../utils/Util.js"
 
@@ -26,9 +27,9 @@ const addSolution = async (req, res, next) => {
             codeTest: codeTest._id,
         }
         await new problemSolutionModel(solutionData).save()
+        await UserModel.updateOne({_id: codeTest.user}, {$push: { score: {track: codeTest.problem.track, score: userScore} }}, {})
         Result.success(res, "Gönderildi")
     } catch(err) {
-        console.log(err)
         next(err)
     }
 }
@@ -38,7 +39,6 @@ const getUserSolutionByProblemId = async (req, res, next) => {
         const {userId,problemId} = req.query
     
         const solution = await problemSolutionModel.findOne({user: userId, problem: problemId}).populate("codeTest")
-        console.log(solution)
         if(!solution) {
             throw Error("Çözümünüz bulunmamaktadır")
         }

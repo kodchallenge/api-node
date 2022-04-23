@@ -21,7 +21,6 @@ const runCode = async (req, res, next) => {
                 Result.success(res, "Code compiled", response.data)
             })
             .catch((err) => {
-                console.log(err)
                 res.json({err})
             })
     }catch(err) {
@@ -65,7 +64,6 @@ const runTest = async (req, res, next) => {
                 Result.success(res, "End code test", {tests: testData, _id: codeTest._id})
             })
             .catch((err) => {
-                console.log(err)
                 res.json({err})
             })
     }catch(err) {

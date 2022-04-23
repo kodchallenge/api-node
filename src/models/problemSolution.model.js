@@ -18,6 +18,10 @@ const problemSolutionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "codeTests"
     },
+    track: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "tracks"
+    },
     ...baseModel
 })
 
