@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
     ],
     photo: {
         type: String,
-        default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
     },
     ...baseModel
 })
@@ -56,6 +55,7 @@ userSchema.statics.login = async function(username, password) {
 userSchema.pre("save", async function(next) {
     const salt = await bcrypt.genSalt()
     this.password = await bcrypt.hash(this.password, salt)
+    this.photo = "https://res.cloudinary.com/kodchallenge/image/upload/v1650798114/users/default.png"
     next()
 })
 

@@ -1,6 +1,7 @@
 import express from "express";
 import authRouter from "./api/auth.route.js";
 import codeRouter from "./api/code.route.js";
+import imageRouter from "./api/image.route.js";
 import problemRouter from "./api/problem.route.js";
 import problemSolutionRouter from "./api/problemSolution.route.js";
 import scoreRouter from "./api/score.route.js";
@@ -24,5 +25,6 @@ router.use("/auth", authRouter)
 router.use("/problemsolutions", problemSolutionRouter)
 router.use("/users", userRouter)
 router.use("/score", scoreRouter)
+router.use("/images", imageRouter)
 
 export default router
