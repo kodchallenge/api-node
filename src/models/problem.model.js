@@ -27,6 +27,10 @@ const problemSchema = mongoose.Schema({
             }
         }
     ],
+    private: {
+        type: Boolean,
+        default: false,
+    },
     ...baseModel
 })
 
