@@ -1,4 +1,5 @@
 import CodeTestModel from "../models/codeTest.model.js"
+import ContestantModel from "../models/constestant.model.js"
 import problemSolutionModel from "../models/problemSolution.model.js"
 import UserModel from "../models/user.model.js"
 import Result from "../utils/result.js"
@@ -26,8 +27,12 @@ const addSolution = async (req, res, next) => {
             problem: codeTest.problem,
             codeTest: codeTest._id,
         }
-        await new problemSolutionModel(solutionData).save()
-        await UserModel.updateOne({_id: codeTest.user}, {$push: { score: {track: codeTest.problem.track, score: userScore} }}, {})
+        const solution = await new problemSolutionModel(solutionData).save()
+        if(!test.contestant) {
+            await UserModel.updateOne({_id: codeTest.user}, {$push: { score: {track: codeTest.problem.track, score: userScore} }}, {})
+        } else {
+            await ContestantModel.updateOne({_id: test.contestant}, {$push: { solutions: solution._id }}, {})
+        }
         Result.success(res, "Gönderildi")
     } catch(err) {
         next(err)

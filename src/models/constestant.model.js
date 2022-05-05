@@ -16,11 +16,21 @@ const contestantSchema = mongoose.Schema({
             ref: "problemSolutions"
         }
     ],
-    time: {
+    startTime: {
+        type: Date,
+    },
+    endTime: {
         type: Number,
+        default: 0,
     },
     totalScore: {
         type: Number,
+        default: 0,
+    },
+    state: {
+        type: String,
+        default: "pending",
+        enum: ["pending", "starting", "finished"]
     },
     ...baseModel
 })
