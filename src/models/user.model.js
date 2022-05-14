@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema({
     photo: {
         type: String,
     },
+    code: {
+        type: String,
+    },
+    resetToken: {
+        type: String,
+    },
     ...baseModel
 })
 

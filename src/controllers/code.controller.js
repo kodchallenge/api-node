@@ -16,15 +16,18 @@ const runCode = async (req, res, next) => {
         code.functionName = problem.functionName
         code.params = problem.io[0].input
     
+        console.log(code)
         axios.post(process.env.CODE_COMPILER_URL+"code/compiler", code)
             .then((response) => {
                 Result.success(res, "Code compiled", response.data)
             })
             .catch((err) => {
                 res.json({err})
+                console.log(err.message)
             })
     }catch(err) {
         next(err)
+        console.log(err)
     }
     
 }

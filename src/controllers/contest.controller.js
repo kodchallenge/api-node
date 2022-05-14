@@ -5,7 +5,7 @@ import Result from "../utils/result.js"
 
 const getAllContests = async (req, res, next) => {
     try {
-        let contests = await ContestModel.find()
+        let contests = await ContestModel.find().sort({startDate: -1})
         Promise.all(contests.map(contest => {
             return new Promise((resolve, reject) => {
                 ContestantModel.find({ contest: contest._id }).then(contestant => {
@@ -16,7 +16,6 @@ const getAllContests = async (req, res, next) => {
                 })
             })
         })).then(result => {
-            console.log(result)
             Result.success(res, "Listelendi", result)
         })
     } catch (err) {
@@ -26,8 +25,8 @@ const getAllContests = async (req, res, next) => {
 }
 
 const getActiveContests = async (req, res, next) => {
-    const contests = await ContestModel.find({ startDate: { $lte: new Date() } }).select("-problems -user")
-    Result.success(res, "Listelendi", contests)
+    const contests = await ContestModel.find().select("-problems -user")
+    Result.success(res, "Listelendi", contests.reverse())
 }
 
 const createContest = async (req, res, next) => {

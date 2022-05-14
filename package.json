@@ -12,6 +12,7 @@
   "author": "Yasin Torun",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",

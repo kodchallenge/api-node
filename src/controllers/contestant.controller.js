@@ -50,6 +50,9 @@ const getContestantByUserId = async (req, res, next) => {
         .populate({ 
             path: 'solutions',
             populate: "codeTest problem"
+        }).populate({
+            path: "contest",
+            populate: "problems"
         })
         Result.success(res, "", contestant)
     }
