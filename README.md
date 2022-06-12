@@ -1,2 +1,7 @@
 # KodChallengeApi
- KodChallenge API
+
+## Tech Stack
+
+- Node.js
+- Express.js
+- MongoDB
